@@ -18,6 +18,10 @@ $client = new Client(['base_uri' => 'https://api.tfl.gov.uk/']);
 
 $promises = [];
 
+$appKey = ['a59c7dbb0d51419d8d3f9dfbf09bd5cc','a2ab67e908f44a0b8836e7f69a3557c9'];
+
+$keyIndex = 0;
+
 $requestSent = 0;
 
 foreach ($postCodeUni as $uniPostCode) {
@@ -30,12 +34,12 @@ foreach ($postCodeUni as $uniPostCode) {
         $host = ltrim(utf8_encode($hostPostCode['Postcode']));
         //var_dump($host);
         
-        $promises[$uni . " and ". $host] = $client->getAsync('/journey/journeyresults/' . $uni . '/to/' . $host . '?app_key=a59c7dbb0d51419d8d3f9dfbf09bd5cc');
-
+        $promises[$uni . " and ". $host] = $client->getAsync('/journey/journeyresults/' . $uni . '/to/' . $host . '?app_key='.$appKey[$keyIndex]);
         $requestSent++;
+        
         var_dump($requestSent);
         if ($requestSent == 499) {
-            sleep(60);
+            $keyIndex++;
             $requestSent = 0;
         }
         //usleep(100000);
@@ -45,9 +49,9 @@ foreach ($postCodeUni as $uniPostCode) {
 
 $results = Promise\settle($promises)->wait();
 
+$error300NTM = 0;
 foreach($results as $promiseKey => $result) {
-    //var_dump($result);
-
+   
     if ($result['state'] == 'fulfilled') {
         if ($result['value']->getStatusCode() == 200) {
             $json = json_decode($result['value']->getBody()->getContents(), true);
@@ -68,9 +72,16 @@ foreach($results as $promiseKey => $result) {
             $tableAllRequest[$promiseKey] = $min;
             
         }
+        else if ($result['value']->getStatusCode() == 300) {
+            $error300NTM++;
+            var_dump($promiseKey);
+            var_dump($result);
+        }
+    } else {
+        //var_dump($result);
     }
 }
-
+var_dump($error300NTM);
 var_dump($tableAllRequest);
 
 
