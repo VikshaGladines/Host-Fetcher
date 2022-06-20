@@ -16,7 +16,7 @@ $tableAllRequest = [];
 
 $client = new Client(['base_uri' => 'https://api.tfl.gov.uk/']);
 
-$promises = [];
+$promisesTbl = [];
 
 $appKey = ['a59c7dbb0d51419d8d3f9dfbf09bd5cc','a2ab67e908f44a0b8836e7f69a3557c9'];
 
@@ -34,57 +34,60 @@ foreach ($postCodeUni as $uniPostCode) {
         $host = ltrim(utf8_encode($hostPostCode['Postcode']));
         //var_dump($host);
         
-        $promises[$uni . " and ". $host] = $client->getAsync('/journey/journeyresults/' . $uni . '/to/' . $host . '?app_key='.$appKey[$keyIndex]);
-        $requestSent++;
+        if ($host != 'SW20 OPJ') {
+
+            $promisesTbl[$uni . " and ". $host] = $client->getAsync('/journey/journeyresults/' . $uni . '/to/' . $host . '?app_key=a59c7dbb0d51419d8d3f9dfbf09bd5cc');
+            $requestSent++;
+        }
         
-        var_dump($requestSent);
+        // var_dump($requestSent);
         if ($requestSent == 499) {
-            $keyIndex++;
+            // $keyIndex++;
+            
+            processTravel($promisesTbl);
+            
+            sleep(60); 
             $requestSent = 0;
         }
         //usleep(100000);
+        
        
     }
 }
 
-$results = Promise\settle($promises)->wait();
-
-$error300NTM = 0;
-foreach($results as $promiseKey => $result) {
-   
-    if ($result['state'] == 'fulfilled') {
-        if ($result['value']->getStatusCode() == 200) {
-            $json = json_decode($result['value']->getBody()->getContents(), true);
-            $journeys = $json['journeys'];
-        
-            $durations = [];
-        
-            //var_dump($promiseKey);
-            //var_dump($journeys);
-    
-            foreach ($journeys as $journey) {
-                $duration = $journey['duration'];
-                array_push($durations, $duration);
-            }
-        
-            $min = min($durations);
-        
-            $tableAllRequest[$promiseKey] = $min;
-            
-        }
-        else if ($result['value']->getStatusCode() == 300) {
-            $error300NTM++;
-            var_dump($promiseKey);
-            var_dump($result);
-        }
-    } else {
-        //var_dump($result);
-    }
-}
-var_dump($error300NTM);
+processTravel($promisesTbl);
 var_dump($tableAllRequest);
 
-
+function processTravel($promises) {
+    var_dump($promises);
+    $results = Promise\settle($promises)->wait();
+            
+    foreach($results as $promiseKey => $result) {
+        
+        if ($result['state'] == 'fulfilled') {
+            if ($result['value']->getStatusCode() == 200) {
+                $json = json_decode($result['value']->getBody()->getContents(), true);
+                $journeys = $json['journeys'];
+                
+                $durations = [];
+                
+                //var_dump($promiseKey);
+                //var_dump($journeys);
+                
+                foreach ($journeys as $journey) {
+                    $duration = $journey['duration'];
+                    array_push($durations, $duration);
+                }
+                
+                $min = min($durations);
+                
+                $tableAllRequest[$promiseKey] = $min;
+                
+            }
+        } 
+    }
+    $promises = [];
+}
 
 
 
