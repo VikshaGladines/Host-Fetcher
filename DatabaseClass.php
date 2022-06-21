@@ -26,7 +26,7 @@ Class Database {
 
         try {
             $dbh = new PDO('mysql:host=localhost;dbname='.$bdd, $this->user, $this->password);
-            $query = $dbh->prepare('SELECT Postcode from '.$table.' LIMIT 30');
+            $query = $dbh->prepare('SELECT Postcode from '.$table.' LIMIT 60');
             $query->execute();
             $result = $query->fetchAll();
             return $result;

@@ -24,6 +24,9 @@ $keyIndex = 0;
 
 $requestSent = 0;
 
+$errors=0;
+
+
 foreach ($postCodeUni as $uniPostCode) {
 
     $uni = ltrim(utf8_encode($uniPostCode['Postcode']));
@@ -44,7 +47,10 @@ foreach ($postCodeUni as $uniPostCode) {
         if ($requestSent == 499) {
             // $keyIndex++;
             
-            processTravel($promisesTbl);
+            $promisesResults = processTravel($promisesTbl);
+            $promisesTbl = $promisesResults[0];
+            $tableAllRequest = array_merge($tableAllRequest, $promisesResults[1]);
+            $errors=$promisesResults[2];
             
             sleep(60); 
             $requestSent = 0;
@@ -55,12 +61,18 @@ foreach ($postCodeUni as $uniPostCode) {
     }
 }
 
-processTravel($promisesTbl);
+$promisesResults = processTravel($promisesTbl);
+$promisesTbl = $promisesResults[0];
+$tableAllRequest = array_merge($tableAllRequest, $promisesResults[1]);
+$errors=$promisesResults[2];
+var_dump($errors);
 var_dump($tableAllRequest);
 
 function processTravel($promises) {
-    var_dump($promises);
+    //var_dump($promises);
     $results = Promise\settle($promises)->wait();
+    $tableRequest = [];
+    $tableError=0;
             
     foreach($results as $promiseKey => $result) {
         
@@ -81,12 +93,15 @@ function processTravel($promises) {
                 
                 $min = min($durations);
                 
-                $tableAllRequest[$promiseKey] = $min;
+                $tableRequest[$promiseKey] = $min;
                 
+            } else if ($result['value']->getStatusCode() == 300) {
+                $tableError++;
             }
         } 
     }
     $promises = [];
+    return [$promises, $tableRequest,$tableError];
 }
 
 
