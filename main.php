@@ -7,25 +7,27 @@ use GuzzleHttp\Client;
 
 ini_set('max_execution_time', 0);
 
-$connect = new Database('root', '');
+$username = 'root';
+$dbName = 'databasetflapi';
+$hostTable = 'host_database';
+$uniTable = 'university_database';
+$savedTable = 'saved_data';
 
-$postCodeHost = $connect->connect('databasetflapi', 'host_database');
-$postCodeUni = $connect->connect('databasetflapi', 'university_database');
-
-$tableAllRequest = [];
+$testUniPostCode = "'EN3 5PA'"; 
 
 $client = new Client(['base_uri' => 'https://api.tfl.gov.uk/']);
 
+$connect = new Database($username, '', $dbName);
+
+$postCodeHost = $connect->load($hostTable);
+$postCodeUni = $connect->load($uniTable);
+
+$tableAllRequest = [];
 $promisesTbl = [];
 
-$appKey = ['a59c7dbb0d51419d8d3f9dfbf09bd5cc','a2ab67e908f44a0b8836e7f69a3557c9'];
-
-$keyIndex = 0;
-
 $requestSent = 0;
-
-$errors=0;
-
+$errors = 0;
+$insertCount = 0;
 
 foreach ($postCodeUni as $uniPostCode) {
 
@@ -38,15 +40,13 @@ foreach ($postCodeUni as $uniPostCode) {
         //var_dump($host);
         
         if ($host != 'SW20 OPJ') {
-
-            $promisesTbl[$uni . " and ". $host] = $client->getAsync('/journey/journeyresults/' . $uni . '/to/' . $host . '?app_key=a59c7dbb0d51419d8d3f9dfbf09bd5cc');
+            $promisesTbl[$uni . ",". $host] = $client->getAsync('/journey/journeyresults/' . $uni . '/to/' . $host . '?app_key=a59c7dbb0d51419d8d3f9dfbf09bd5cc');
             $requestSent++;
         }
         
         // var_dump($requestSent);
         if ($requestSent == 499) {
-            // $keyIndex++;
-            
+          
             $promisesResults = processTravel($promisesTbl);
             $promisesTbl = $promisesResults[0];
             $tableAllRequest = array_merge($tableAllRequest, $promisesResults[1]);
@@ -55,9 +55,6 @@ foreach ($postCodeUni as $uniPostCode) {
             sleep(60); 
             $requestSent = 0;
         }
-        //usleep(100000);
-        
-       
     }
 }
 
@@ -65,14 +62,37 @@ $promisesResults = processTravel($promisesTbl);
 $promisesTbl = $promisesResults[0];
 $tableAllRequest = array_merge($tableAllRequest, $promisesResults[1]);
 $errors=$promisesResults[2];
-var_dump($errors);
-var_dump($tableAllRequest);
+
+//var_dump($errors);
+//var_dump($tableAllRequest);
+
+$connect->truncate($savedTable);
+
+foreach($tableAllRequest as $travelName => $travelTime) {
+    $postCodes = explode(',', $travelName);
+    $uni = $postCodes[0];
+    $host = $postCodes[1];
+    
+    $connect->update($savedTable, $uni, $host, $travelTime);
+
+    $insertCount++;
+}
+
+echo 'number of register : ' . $insertCount;
+
+$travels = $connect->selectWhere($savedTable, 'HostPostCode, TravelTime, UniPostCode', 'UniPostCode', $testUniPostCode, 'ASC', 'TravelTime');
+
+foreach($travels as $travel) {
+    echo $travel['HostPostCode'] . ' : ' . $travel['TravelTime'] . 'min <br>';
+}   
+
+
 
 function processTravel($promises) {
     //var_dump($promises);
     $results = Promise\settle($promises)->wait();
     $tableRequest = [];
-    $tableError=0;
+    $tableError = 0;
             
     foreach($results as $promiseKey => $result) {
         
