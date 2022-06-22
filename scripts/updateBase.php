@@ -1,6 +1,5 @@
 <?php
-include('RequestClass.php');
-include('DatabaseClass.php');
+include('../class/DatabaseClass.php');
 require 'vendor/autoload.php';
 use GuzzleHttp\Promise;
 use GuzzleHttp\Client;
@@ -11,9 +10,7 @@ $username = 'root';
 $dbName = 'databasetflapi';
 $hostTable = 'host_database';
 $uniTable = 'university_database';
-$savedTable = 'saved_data';
-
-$testUniPostCode = "'EN3 5PA'"; 
+$savedTable = 'saved_data'; 
 
 $client = new Client(['base_uri' => 'https://api.tfl.gov.uk/']);
 
@@ -32,19 +29,16 @@ $insertCount = 0;
 foreach ($postCodeUni as $uniPostCode) {
 
     $uni = ltrim(utf8_encode($uniPostCode['Postcode']));
-    //var_dump($uni);
 
     foreach ($postCodeHost as $hostPostCode) {
 
         $host = ltrim(utf8_encode($hostPostCode['Postcode']));
-        //var_dump($host);
         
         if ($host != 'SW20 OPJ') {
             $promisesTbl[$uni . ",". $host] = $client->getAsync('/journey/journeyresults/' . $uni . '/to/' . $host . '?app_key=a59c7dbb0d51419d8d3f9dfbf09bd5cc');
             $requestSent++;
         }
         
-        // var_dump($requestSent);
         if ($requestSent == 499) {
           
             $promisesResults = processTravel($promisesTbl);
@@ -63,9 +57,6 @@ $promisesTbl = $promisesResults[0];
 $tableAllRequest = array_merge($tableAllRequest, $promisesResults[1]);
 $errors=$promisesResults[2];
 
-//var_dump($errors);
-//var_dump($tableAllRequest);
-
 $connect->truncate($savedTable);
 
 foreach($tableAllRequest as $travelName => $travelTime) {
@@ -78,18 +69,7 @@ foreach($tableAllRequest as $travelName => $travelTime) {
     $insertCount++;
 }
 
-echo 'number of register : ' . $insertCount;
-
-$travels = $connect->selectWhere($savedTable, 'HostPostCode, TravelTime, UniPostCode', 'UniPostCode', $testUniPostCode, 'ASC', 'TravelTime');
-
-foreach($travels as $travel) {
-    echo $travel['HostPostCode'] . ' : ' . $travel['TravelTime'] . 'min <br>';
-}   
-
-
-
 function processTravel($promises) {
-    //var_dump($promises);
     $results = Promise\settle($promises)->wait();
     $tableRequest = [];
     $tableError = 0;
@@ -102,9 +82,6 @@ function processTravel($promises) {
                 $journeys = $json['journeys'];
                 
                 $durations = [];
-                
-                //var_dump($promiseKey);
-                //var_dump($journeys);
                 
                 foreach ($journeys as $journey) {
                     $duration = $journey['duration'];
@@ -122,49 +99,4 @@ function processTravel($promises) {
     }
     $promises = [];
     return [$promises, $tableRequest,$tableError];
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//.$this->postCode.
-        // $host = $hostPostCode['Postcode'];
-
-        // $data =  json_decode(file_get_contents('https://api.tfl.gov.uk/journey/journeyresults/' . $uni . '/to/' . $host . '?app_key=a59c7dbb0d51419d8d3f9dfbf09bd5cc'), true);
-
-        // $duration = $data['journeys'];
-
-        
-        // //$datas = file_get_contents('https://api.tfl.gov.uk/journey/journeyresults/UB68BP/to/W138ER');
-
-
-        // //echo $datas."<br>";
-
-        // $tableTemp = [];
-
-        // foreach ($duration as $durations) {
-        //     $durationns = $durations['duration'];
-        //     array_push($tableTemp, $durationns);
-        // }
-
-        // $min = min($tableTemp);
-
-        // echo "Shorter travel time : " . $min . " of travel between " . $uni . " and ". $host . " . <br>";
-
-        // echo "<br>";
-
-        // //$request = new Request($uniPostCode['Postcode'], $hostPostCode['Postcode']);
-        // array_push($tableAllRequest, array($uni . " and ". $host => $min));
+} 
