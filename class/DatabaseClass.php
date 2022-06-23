@@ -66,7 +66,7 @@ Class Database {
     }
     public function selectWhere($table, $selection, $colWhere, $where, $order, $colOrder) {
         try {
-            $query = $this->dbh->prepare('SELECT ' . $selection . ' from ' . $table. ' WHERE ' . $colWhere . ' = ' . $where . ' ORDER BY ' . $colOrder . ' ' . $order);
+            $query = $this->dbh->prepare('SELECT ' . $selection . ' from ' . $table. ' WHERE ' . $colWhere . " = '" . $where . "' ORDER BY '" . $colOrder . ' ' . $order . "' LIMIT 10");
             $query->execute();
             $result = $query->fetchAll();
             return $result;
@@ -75,7 +75,17 @@ Class Database {
             die();
         }
     }
-
+    public function selectWhereOr($table, $selection, $value) {
+        try {
+            $query = $this->dbh->prepare('SELECT ' . $selection . ' from ' . $table . " WHERE EstablishmentName = '" . $value . "' OR Postcode = '" . $value . "' OR Street = '" . $value . "'");
+            $query->execute();
+            $result = $query->fetch();
+            return $result;
+        } catch (PDOException $e) {
+            print "Erreur !: " . $e->getMessage() . "<br/>";
+            die();
+        }
+    }
 }
 
 
