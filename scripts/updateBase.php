@@ -19,6 +19,28 @@ $connect = new Database($username, '', $dbName);
 
 $postCodeHost = $connect->load($hostTable);
 $postCodeUni = $connect->load($uniTable);
+if (isset($_GET['enteredPostCode'])) {
+    $enteredPostCode = $_GET['enteredPostCode'];
+    if (isset($_GET['uniRadio'])) {
+        $table = $uniTable;
+        $results = $connect->selectWhere($uniTable, '*', 'Postcode', $enteredPostCode, 'ASC', 'Postcode');
+        if (empty($results) != false) {
+            $postCodeUni = $results;
+        } else {
+            header("Location: ../updatePage");
+        }
+    } else {
+        $table = $hostTable;
+        $results = $connect->selectWhere($hostTable, '*', 'Postcode', $enteredPostCode, 'ASC', 'Postcode');
+        if (empty($results) != false) {
+            $postCodeHost = $results;
+        } else {
+            header("Location: ../updatePage");
+        }
+    }
+} else {
+    header("Location: ../updatePage");
+}
 
 $tableAllRequest = [];
 $promisesTbl = [];
@@ -101,3 +123,5 @@ function processTravel($promises)
     $promises = [];
     return [$promises, $tableRequest, $tableError];
 }
+
+header('Location: ../updatePage.php');
