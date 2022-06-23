@@ -80,6 +80,13 @@ h1 {
   font-size: 20px;
   text-align: center;
 }
+
+.Done {
+  color: rgb(0, 255, 64);
+  font-size: 20px;
+  text-align: center;
+}
+
 .Header {
   border-bottom: solid 2px #32a1ce;
   text-align: center;

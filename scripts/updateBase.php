@@ -141,4 +141,5 @@ function processTravel($promises)
     return [$promises, $tableRequest, $tableError];
 }
 
+$_SESSION['done'] = 'Update done !';
 header('Location: ../updatePage.php');
