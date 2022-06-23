@@ -141,4 +141,4 @@ function processTravel($promises)
     return [$promises, $tableRequest, $tableError];
 }
 
-// header('Location: ../updatePage.php');
+header('Location: ../updatePage.php');
