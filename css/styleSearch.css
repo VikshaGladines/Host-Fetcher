@@ -1,27 +1,30 @@
 h1 {
-    text-align: center;
+  text-align: center;
 }
+
 .inputSearch {
-    margin-top: 25px;
-    text-align: center;
-    color:darkcyan;
-    margin-bottom: 40px;
-    border-bottom: solid 2px #32a1ce;
+  margin-top: 25px;
+  text-align: center;
+  color: darkcyan;
+  margin-bottom: 40px;
+  border-bottom: solid 2px #32a1ce;
 }
+
 .labelInput {
-    margin: 20px;
-    font-size: 40px;
+  margin: 20px;
+  font-size: 40px;
 }
+
 .Input {
-    margin-top: 60px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+  margin-top: 60px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 /* CSS */
-.Button{
+.Button {
   background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
   border-radius: .5rem;
   box-sizing: border-box;
@@ -48,30 +51,35 @@ h1 {
   }
 }
 
-.ButtonUpdate{
-    background-image: linear-gradient(-180deg, #e23737 0%, #c81e4b 100%);
-    border-radius: .5rem;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    font-size: 16px;
-    padding: 15px;
-    text-decoration: none;
-    border: 0;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    margin-left: 10px;
-    justify-content: right;
+.ButtonUpdate {
+  background-image: linear-gradient(-180deg, #e23737 0%, #c81e4b 100%);
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  font-size: 16px;
+  padding: 15px;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-left: 10px;
+  justify-content: right;
+}
+
+.ButtonUpdate:hover {
+  background-image: linear-gradient(-180deg, #c91d1d 0%, #9c172f 100%);
+}
+
+@media (min-width: 768px) {
+  .ButtonUpdate {
+    padding: 1rem 2rem;
   }
-  
-  .ButtonUpdate:hover {
-    background-image: linear-gradient(-180deg, #c91d1d 0%, #9c172f 100%);
-  }
-  
-  @media (min-width: 768px) {
-    .ButtonUpdate {
-      padding: 1rem 2rem;
-    }
-  }
-  
+}
+
+.Error {
+  color: red;
+  font-size: 20px;
+  text-align: center;
+}

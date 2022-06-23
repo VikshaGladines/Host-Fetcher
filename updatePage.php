@@ -54,9 +54,14 @@ if (isset($_SESSION['error'])) {
         </a>
     </p>
 
-    <p>
-        
-    </p>
+    <?php
+
+    if ($error != null) {
+        echo '<p class="Error">' . $error . '</p>';
+        session_destroy();
+    }
+
+    ?>
 
 </body>
 
