@@ -1,26 +1,29 @@
 h1 {
-    text-align: center;
+  text-align: center;
 }
+
 .inputSearch {
     margin-top: 25px;
     color:darkcyan;
     margin-bottom: 40px;
     display: inline-block;
 }
+
 .labelInput {
-    margin: 20px;
-    font-size: 40px;
+  margin: 20px;
+  font-size: 40px;
 }
+
 .Input {
-    margin-top: 60px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+  margin-top: 60px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 /* CSS */
-.Button{
+.Button {
   background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
   border-radius: .5rem;
   box-sizing: border-box;

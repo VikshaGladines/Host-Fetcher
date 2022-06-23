@@ -5,6 +5,7 @@ require 'vendor/autoload.php';
 use GuzzleHttp\Promise;
 use GuzzleHttp\Client;
 
+session_start();
 ini_set('max_execution_time', 0);
 
 $username = 'root';
@@ -14,7 +15,6 @@ $uniTable = 'university_database';
 $savedTable = 'saved_data';
 
 $client = new Client(['base_uri' => 'https://api.tfl.gov.uk/']);
-
 $connect = new Database($username, '', $dbName);
 
 $isPostCodeGiven = isset($_GET['enteredPostCode']);
@@ -24,9 +24,9 @@ $postCodeHost = $connect->load($hostTable);
 $postCodeUni = $connect->load($uniTable);
 
 if ($isPostCodeGiven) {
-
+    
     $enteredPostCode = $_GET['enteredPostCode'];
-
+    
     if ($isPlaceTypeRadioChecked) {
         $radioChoice = $_GET['placeType'];
         if ($radioChoice == 'uniRadio') {
@@ -38,12 +38,14 @@ if ($isPostCodeGiven) {
         }
         $connect->delete($savedTable, $delPostCodeName, $enteredPostCode);
     } else {
-        header("Location: ../updatePage");
+        $_SESSION['error'] = 'Please check one of the place type option.';
+        header("Location: ../updatePage.php");
+        exit;
     }
-
+    
     $results = $connect->selectWhere($actionTable, '*', 'Postcode', $enteredPostCode, 'ASC', 'Postcode');
     var_dump($results);
-
+    
     if (empty($results) == false) {
         if ($radioChoice == 'uniRadio') {
             $postCodeUni = $results;
@@ -51,12 +53,13 @@ if ($isPostCodeGiven) {
             $postCodeHost = $results;
         }
     } else {
-        header("Location: ../updatePage");
+        $_SESSION['error'] = 'Please enter a correct post code or choose the correct place type.';
+        header("Location: ../updatePage.php");
+        exit;
     }
 } else {
     $connect->truncate($savedTable);
 }
-
 
 $tableAllRequest = [];
 $promisesTbl = [];
@@ -66,7 +69,7 @@ $errors = 0;
 $insertCount = 0;
 
 foreach ($postCodeUni as $uniPostCode) {
-
+    
     $uni = ltrim(utf8_encode($uniPostCode['Postcode']));
 
     foreach ($postCodeHost as $hostPostCode) {
@@ -138,4 +141,4 @@ function processTravel($promises)
     return [$promises, $tableRequest, $tableError];
 }
 
-header('Location: ../updatePage.php');
+// header('Location: ../updatePage.php');
