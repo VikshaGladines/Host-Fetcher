@@ -66,7 +66,7 @@ Class Database {
     }
     public function selectWhere($table, $selection, $colWhere, $where, $order, $colOrder) {
         try {
-            $query = $this->dbh->prepare('SELECT ' . $selection . ' from ' . $table. ' WHERE ' . $colWhere . " = '" . $where . "' ORDER BY '" . $colOrder . ' ' . $order . "' LIMIT 10");
+            $query = $this->dbh->prepare('SELECT ' . $selection . ' from ' . $table. ' WHERE ' . $colWhere . " = '" . $where . "' ORDER BY " . $colOrder . ' ' . $order . " LIMIT 10");
             $query->execute();
             $result = $query->fetchAll();
             return $result;
