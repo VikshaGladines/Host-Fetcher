@@ -17,30 +17,33 @@ $client = new Client(['base_uri' => 'https://api.tfl.gov.uk/']);
 
 $connect = new Database($username, '', $dbName);
 
-$isPostCodeSet = isset($_GET['enteredPostCode']);
+$isPostCodeGiven = isset($_GET['enteredPostCode']);
 $isPlaceTypeRadioChecked = isset($_GET['placeType']);
-
-if ($isPlaceTypeRadioChecked) {
-    $radioChoice = $_GET['placeType'];
-    if ($radioChoice == 'uniRadio') {
-        $actionTable = $uniTable;
-    } else if ($radioChoice == 'hostRadio') {
-        $actionTable = $hostTable;
-    }
-} else {
-    header("Location: ../updatePage");
-}
-
-if ($isPostCodeSet) {
-    $enteredPostCode = $_GET['enteredPostCode'];
-}
 
 $postCodeHost = $connect->load($hostTable);
 $postCodeUni = $connect->load($uniTable);
 
-if ($isPostCodeSet) {
+if ($isPostCodeGiven) {
+
+    $enteredPostCode = $_GET['enteredPostCode'];
+
+    if ($isPlaceTypeRadioChecked) {
+        $radioChoice = $_GET['placeType'];
+        if ($radioChoice == 'uniRadio') {
+            $actionTable = $uniTable;
+            $delPostCodeName = 'UniPostCode';
+        } else if ($radioChoice == 'hostRadio') {
+            $actionTable = $hostTable;
+            $delPostCodeName = 'HostPostCode';
+        }
+        $connect->delete($savedTable, $delPostCodeName, $enteredPostCode);
+    } else {
+        header("Location: ../updatePage");
+    }
+
     $results = $connect->selectWhere($actionTable, '*', 'Postcode', $enteredPostCode, 'ASC', 'Postcode');
     var_dump($results);
+
     if (empty($results) == false) {
         if ($radioChoice == 'uniRadio') {
             $postCodeUni = $results;
@@ -50,7 +53,10 @@ if ($isPostCodeSet) {
     } else {
         header("Location: ../updatePage");
     }
+} else {
+    $connect->truncate($savedTable);
 }
+
 
 $tableAllRequest = [];
 $promisesTbl = [];
@@ -89,8 +95,6 @@ $promisesResults = processTravel($promisesTbl);
 $promisesTbl = $promisesResults[0];
 $tableAllRequest = array_merge($tableAllRequest, $promisesResults[1]);
 $errors = $promisesResults[2];
-
-$connect->truncate($savedTable);
 
 foreach ($tableAllRequest as $travelName => $travelTime) {
     $postCodes = explode(',', $travelName);
