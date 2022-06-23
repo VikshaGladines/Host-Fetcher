@@ -52,7 +52,8 @@ class Database
         }
     }
 
-    public function delete($table, $whereCol, $condition) {
+    public function delete($table, $whereCol, $condition)
+    {
         try {
 
             $query = $this->dbh->prepare("DELETE FROM " . $table . " WHERE " . $whereCol . " = '" . $condition . "'");
@@ -90,7 +91,7 @@ class Database
     public function selectWhere($table, $selection, $colWhere, $where, $order, $colOrder)
     {
         try {
-            $query = $this->dbh->prepare('SELECT ' . $selection . ' from ' . $table. ' WHERE ' . $colWhere . " = '" . $where . "' ORDER BY " . $colOrder . ' ' . $order . " LIMIT 10");
+            $query = $this->dbh->prepare('SELECT ' . $selection . ' from ' . $table . ' WHERE ' . $colWhere . " = '" . $where . "' ORDER BY " . $colOrder . ' ' . $order . " LIMIT 10");
             $query->execute();
             $result = $query->fetchAll();
             return $result;

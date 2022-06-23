@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,8 +10,9 @@
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <title>Search Home</title>
 </head>
+
 <body>
-    <?php 
+    <?php
     include('class/DatabaseClass.php');
 
     $username = 'root';
@@ -20,63 +22,63 @@
     $savedTable = 'saved_data';
 
     $connect = new Database($username, '', $dbName);
-    
+
     $universities = $connect->selectAll($uniTable, '*');
 
     $uniJson = json_encode($universities);
     ?>
 
     <script>
-        //let universities = <?php //echo json_encode($uniJson); ?>;
+        //let universities = <?php //echo json_encode($uniJson); 
+                                ?>;
         //document.write(arr[1]);
 
-        $( function() {
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-    $( "#university" ).autocomplete({
-      source: availableTags
-    });
-} );
+        $(function() {
+            var availableTags = [
+                "ActionScript",
+                "AppleScript",
+                "Asp",
+                "BASIC",
+                "C",
+                "C++",
+                "Clojure",
+                "COBOL",
+                "ColdFusion",
+                "Erlang",
+                "Fortran",
+                "Groovy",
+                "Haskell",
+                "Java",
+                "JavaScript",
+                "Lisp",
+                "Perl",
+                "PHP",
+                "Python",
+                "Ruby",
+                "Scala",
+                "Scheme"
+            ];
+            $("#university").autocomplete({
+                source: availableTags
+            });
+        });
+    </script>
+    <div class="Header">
+        <div class="inputSearch">
+            <label class="labelInput" for="search"> Enter the name of your school </label>
 
-</script>
-<div class="Header">
-    <div class="inputSearch">
-        <label class="labelInput" for="search"> Enter the name of your school </label> 
-
-        <form action="" name="search" method="POST">
-            <input class="Input" type="text" id="university" name="university" required placeholder="ex : Abbey Manor College">
-            <button class="Button" type="submit"> Search </button>   
-        </form>
-        <form action="updatePage.php" method="POST">
-            <button class="ButtonUpdate" type="submit"> update </button>  
-        </form>
+            <form action="" name="search" method="POST">
+                <input class="Input" type="text" id="university" name="university" required placeholder="ex : Abbey Manor College">
+                <button class="Button" type="submit"> Search </button>
+            </form>
+            <form action="updatePage.php" method="POST">
+                <button class="ButtonUpdate" type="submit"> update </button>
+            </form>
+        </div>
     </div>
-</div>
 
-    <?php 
-    
+    <?php
+
     if (isset($_POST['university'])) {
         $value = $_POST['university'];
         $universityPostCode = $connect->selectWhereOr($uniTable, 'Postcode', $value);
@@ -85,32 +87,32 @@
             die();
         }
         if (isset($universityPostCode)) {
-                $travel = $connect->selectWhere($savedTable, '*', 'UniPostCode', $universityPostCode['Postcode'], "ASC", "TravelTime" );
-                if(empty($travel) == true) {
+            $travel = $connect->selectWhere($savedTable, '*', 'UniPostCode', $universityPostCode['Postcode'], "ASC", "TravelTime");
+            if (empty($travel) == true) {
+                echo '<p class="Error">Invalid university Name, PostCode or Street </p>';
+                die();
+            }
+            foreach ($travel as $hostTravel) {
+                $hosts = $connect->selectWhere($hostTable, "*", 'Postcode', $hostTravel['HostPostCode'], "ASC", "Postcode");
+                if (empty($hosts) == true) {
                     echo '<p class="Error">Invalid university Name, PostCode or Street </p>';
                     die();
                 }
-                foreach ($travel as $hostTravel) {
-                    $hosts = $connect->selectWhere($hostTable, "*", 'Postcode', $hostTravel['HostPostCode'], "ASC", "Postcode");
-                    if(empty($hosts) == true) {
-                        echo '<p class="Error">Invalid university Name, PostCode or Street </p>';
-                        die();
-                    }
-                    foreach($hosts as $host) {
-                        echo $host['Postcode'].'  |  ';
-                        echo $host['Number_of_bedrooms_available_to_students'].'  |  ';
-                        echo $host['Meal_Plan'].'  |  ';
-                        echo $host['Select_the_beds_in_room_1'].'  |  ';
-                        echo $hostTravel['TravelTime'].'  |  ';
-                        echo '<br> <br> <br>';
-                        
-                    }
+                foreach ($hosts as $host) {
+                    echo $host['Postcode'] . '  |  ';
+                    echo $host['Number_of_bedrooms_available_to_students'] . '  |  ';
+                    echo $host['Meal_Plan'] . '  |  ';
+                    echo $host['Select_the_beds_in_room_1'] . '  |  ';
+                    echo $hostTravel['TravelTime'] . '  |  ';
+                    echo '<br> <br> <br>';
                 }
+            }
         }
-    } 
+    }
     ?>
 
-    
-    
+
+
 </body>
+
 </html>
