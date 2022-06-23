@@ -3,10 +3,10 @@ h1 {
 }
 
 .inputSearch {
-    margin-top: 25px;
-    color:darkcyan;
-    margin-bottom: 40px;
-    display: inline-block;
+  margin-top: 25px;
+  color: darkcyan;
+  margin-bottom: 40px;
+  display: inline-block;
 }
 
 .labelInput {
@@ -50,38 +50,44 @@ h1 {
   }
 }
 
-.ButtonUpdate{
-    background-image: linear-gradient(-180deg, #e23737 0%, #c81e4b 100%);
-    border-radius: .5rem;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    font-size: 16px;
-    padding: 15px;
-    text-decoration: none;
-    border: 0;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
+.ButtonUpdate {
+  background-image: linear-gradient(-180deg, #e23737 0%, #c81e4b 100%);
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  font-size: 16px;
+  padding: 15px;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.ButtonUpdate:hover {
+  background-image: linear-gradient(-180deg, #c91d1d 0%, #9c172f 100%);
+}
+
+@media (min-width: 768px) {
+  .ButtonUpdate {
+    padding: 1rem 2rem;
   }
-  
-  .ButtonUpdate:hover {
-    background-image: linear-gradient(-180deg, #c91d1d 0%, #9c172f 100%);
-  }
-  
-  @media (min-width: 768px) {
-    .ButtonUpdate {
-      padding: 1rem 2rem;
-    }
-  }
+}
 
 .Error {
   color: red;
   font-size: 20px;
   text-align: center;
 }
+
+.Done {
+  color: rgb(0, 255, 64);
+  font-size: 20px;
+  text-align: center;
+}
+
 .Header {
   border-bottom: solid 2px #32a1ce;
   text-align: center;
 }
-  

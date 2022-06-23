@@ -24,9 +24,9 @@ $postCodeHost = $connect->load($hostTable);
 $postCodeUni = $connect->load($uniTable);
 
 if ($isPostCodeGiven) {
-    
+
     $enteredPostCode = $_GET['enteredPostCode'];
-    
+
     if ($isPlaceTypeRadioChecked) {
         $radioChoice = $_GET['placeType'];
         if ($radioChoice == 'uniRadio') {
@@ -42,10 +42,10 @@ if ($isPostCodeGiven) {
         header("Location: ../updatePage.php");
         exit;
     }
-    
+
     $results = $connect->selectWhere($actionTable, '*', 'Postcode', $enteredPostCode, 'ASC', 'Postcode');
     var_dump($results);
-    
+
     if (empty($results) == false) {
         if ($radioChoice == 'uniRadio') {
             $postCodeUni = $results;
@@ -69,7 +69,7 @@ $errors = 0;
 $insertCount = 0;
 
 foreach ($postCodeUni as $uniPostCode) {
-    
+
     $uni = ltrim(utf8_encode($uniPostCode['Postcode']));
 
     foreach ($postCodeHost as $hostPostCode) {
@@ -141,4 +141,5 @@ function processTravel($promises)
     return [$promises, $tableRequest, $tableError];
 }
 
-// header('Location: ../updatePage.php');
+$_SESSION['done'] = 'Update done !';
+header('Location: ../updatePage.php');

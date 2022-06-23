@@ -3,9 +3,14 @@
 session_start();
 
 $error = null;
+$doneText = null;
 
 if (isset($_SESSION['error'])) {
     $error = $_SESSION['error'];
+}
+
+if (isset($_SESSION['done'])) {
+    $doneText = $_SESSION['done'];
 }
 
 ?>
@@ -58,6 +63,11 @@ if (isset($_SESSION['error'])) {
 
     if ($error != null) {
         echo '<p class="Error">' . $error . '</p>';
+        session_destroy();
+    }
+
+    if ($doneText != null) {
+        echo '<p class="Done">' . $doneText . '</p>';
         session_destroy();
     }
 
