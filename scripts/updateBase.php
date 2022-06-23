@@ -5,6 +5,7 @@ require 'vendor/autoload.php';
 use GuzzleHttp\Promise;
 use GuzzleHttp\Client;
 
+session_start();
 ini_set('max_execution_time', 0);
 
 $username = 'root';
@@ -38,6 +39,7 @@ if ($isPostCodeGiven) {
         }
         $connect->delete($savedTable, $delPostCodeName, $enteredPostCode);
     } else {
+        $_SESSION['error'] = 'Please check one of the place type option.';
         header("Location: ../updatePage");
     }
 
@@ -51,6 +53,7 @@ if ($isPostCodeGiven) {
             $postCodeHost = $results;
         }
     } else {
+        $_SESSION['error'] = 'Please enter a correct post code or choose the correct place type.';
         header("Location: ../updatePage");
     }
 } else {
