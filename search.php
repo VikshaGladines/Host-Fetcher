@@ -29,7 +29,6 @@
     ?>
 
     <script>
-<<<<<<< HEAD
         let universities = <?php echo json_encode($uniJson); ?>;
         const obj = JSON.parse(universities);
         var test = obj[0];
@@ -49,45 +48,6 @@
 <div class="Header">
     <div class="inputSearch">
         <label class="labelInput" for="search"> Enter the name of your school </label> 
-=======
-        //let universities = <?php //echo json_encode($uniJson); 
-                                ?>;
-        //document.write(arr[1]);
-
-        $(function() {
-            var availableTags = [
-                "ActionScript",
-                "AppleScript",
-                "Asp",
-                "BASIC",
-                "C",
-                "C++",
-                "Clojure",
-                "COBOL",
-                "ColdFusion",
-                "Erlang",
-                "Fortran",
-                "Groovy",
-                "Haskell",
-                "Java",
-                "JavaScript",
-                "Lisp",
-                "Perl",
-                "PHP",
-                "Python",
-                "Ruby",
-                "Scala",
-                "Scheme"
-            ];
-            $("#university").autocomplete({
-                source: availableTags
-            });
-        });
-    </script>
-    <div class="Header">
-        <div class="inputSearch">
-            <label class="labelInput" for="search"> Enter the name of your school </label>
->>>>>>> 3bb8c9822617016a0dd7bcb39a4007c10fb3f994
 
             <form action="" name="search" method="POST">
                 <input class="Input" type="text" id="university" name="university" required placeholder="ex : Abbey Manor College">
