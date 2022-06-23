@@ -66,7 +66,7 @@ Class Database {
     }
     public function selectWhere($table, $selection, $colWhere, $where, $order, $colOrder) {
         try {
-            $query = $this->dbh->prepare('SELECT ' . $selection . ' from ' . $table. ' WHERE ' . $colWhere . ' = ' . $where . ' ORDER BY ' . $colOrder . ' ' . $order);
+            $query = $this->dbh->prepare('SELECT ' . $selection . ' from ' . $table. ' WHERE ' . $colWhere . " = '" . $where . "' ORDER BY " . $colOrder . ' ' . $order);
             $query->execute();
             $result = $query->fetchAll();
             return $result;
@@ -77,6 +77,3 @@ Class Database {
     }
 
 }
-
-
-?>
