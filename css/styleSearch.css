@@ -48,7 +48,7 @@ h1 {
   }
 }
 
-.Button2{
+.ButtonUpdate{
     background-image: linear-gradient(-180deg, #e23737 0%, #c81e4b 100%);
     border-radius: .5rem;
     box-sizing: border-box;
@@ -65,12 +65,12 @@ h1 {
     justify-content: right;
   }
   
-  .Button2:hover {
+  .ButtonUpdate:hover {
     background-image: linear-gradient(-180deg, #c91d1d 0%, #9c172f 100%);
   }
   
   @media (min-width: 768px) {
-    .Button2 {
+    .ButtonUpdate {
       padding: 1rem 2rem;
     }
   }

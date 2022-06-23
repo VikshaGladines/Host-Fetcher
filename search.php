@@ -62,7 +62,7 @@
     ?>
 
     <form action="updatePage.php" method="POST">
-        <button class="Button2" type="submit"> update </button>  
+        <button class="ButtonUpdate" type="submit"> update </button>  
     </form>
 
     
