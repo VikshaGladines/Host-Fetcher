@@ -24,12 +24,12 @@
             <input type="submit" value="Update">
             <p>
                 <label for="hostRadio">Host
-                    <input type="radio" name="placeType" id="hostRadio">
+                    <input type="radio" name="placeType" id="hostRadio" value="hostRadio" required>
                 </label>
             </p>
             <p>
                 <label for="uniRadio">University
-                    <input type="radio" name="placeType" id="uniRadio">
+                    <input type="radio" name="placeType" id="uniRadio" value="uniRadio">
                 </label>
             </p>
         </form>

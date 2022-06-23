@@ -17,29 +17,39 @@ $client = new Client(['base_uri' => 'https://api.tfl.gov.uk/']);
 
 $connect = new Database($username, '', $dbName);
 
-$postCodeHost = $connect->load($hostTable);
-$postCodeUni = $connect->load($uniTable);
-if (isset($_GET['enteredPostCode'])) {
-    $enteredPostCode = $_GET['enteredPostCode'];
-    if (isset($_GET['uniRadio'])) {
-        $table = $uniTable;
-        $results = $connect->selectWhere($uniTable, '*', 'Postcode', $enteredPostCode, 'ASC', 'Postcode');
-        if (empty($results) != false) {
-            $postCodeUni = $results;
-        } else {
-            header("Location: ../updatePage");
-        }
-    } else {
-        $table = $hostTable;
-        $results = $connect->selectWhere($hostTable, '*', 'Postcode', $enteredPostCode, 'ASC', 'Postcode');
-        if (empty($results) != false) {
-            $postCodeHost = $results;
-        } else {
-            header("Location: ../updatePage");
-        }
+$isPostCodeSet = isset($_GET['enteredPostCode']);
+$isPlaceTypeRadioChecked = isset($_GET['placeType']);
+
+if ($isPlaceTypeRadioChecked) {
+    $radioChoice = $_GET['placeType'];
+    if ($radioChoice == 'uniRadio') {
+        $actionTable = $uniTable;
+    } else if ($radioChoice == 'hostRadio') {
+        $actionTable = $hostTable;
     }
 } else {
     header("Location: ../updatePage");
+}
+
+if ($isPostCodeSet) {
+    $enteredPostCode = $_GET['enteredPostCode'];
+}
+
+$postCodeHost = $connect->load($hostTable);
+$postCodeUni = $connect->load($uniTable);
+
+if ($isPostCodeSet) {
+    $results = $connect->selectWhere($actionTable, '*', 'Postcode', $enteredPostCode, 'ASC', 'Postcode');
+    var_dump($results);
+    if (empty($results) == false) {
+        if ($radioChoice == 'uniRadio') {
+            $postCodeUni = $results;
+        } else if ($radioChoice == 'hostRadio') {
+            $postCodeHost = $results;
+        }
+    } else {
+        header("Location: ../updatePage");
+    }
 }
 
 $tableAllRequest = [];

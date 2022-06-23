@@ -1,29 +1,36 @@
 <?php
-Class Database {
+class Database
+{
 
     private $dbh;
 
-    public function __construct($user, $password, $bdd) {
-        $this->dbh = new PDO('mysql:host=localhost;dbname='.$bdd, $user, $password);
+    public function __construct($user, $password, $bdd)
+    {
+        $this->dbh = new PDO('mysql:host=localhost;dbname=' . $bdd, $user, $password);
     }
-    public function getUser() {
+    public function getUser()
+    {
         return $this->user;
     }
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
-    public function setUser($user) {
+    public function setUser($user)
+    {
         $this->user = $user;
     }
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->password = $password;
     }
 
 
-    public function load($table) {
+    public function load($table)
+    {
 
         try {
-            $query = $this->dbh->prepare('SELECT Postcode from '.$table.' LIMIT 20');
+            $query = $this->dbh->prepare('SELECT Postcode from ' . $table . ' LIMIT 20');
             $query->execute();
             $result = $query->fetchAll();
             return $result;
@@ -31,20 +38,33 @@ Class Database {
             print "Erreur !: " . $e->getMessage() . "<br/>";
             die();
         }
-
     }
-    public function truncate($table) {
+
+    public function truncate($table)
+    {
         try {
-    
+
             $query = $this->dbh->prepare('TRUNCATE TABLE ' . $table);
             $query->execute();
         } catch (PDOException $e) {
             print "Erreur !: " . $e->getMessage() . "<br/>";
             die();
         }
-    } 
+    }
 
-    public function update($table, $uni, $host, $time) {
+    public function delete($table, $whereCol, $condition) {
+        try {
+
+            $query = $this->dbh->prepare("DELETE FROM " . $table . " WHERE " . $whereCol . " = '" . $condition . "'");
+            $query->execute();
+        } catch (PDOException $e) {
+            print "Erreur !: " . $e->getMessage() . "<br/>";
+            die();
+        }
+    }
+
+    public function update($table, $uni, $host, $time)
+    {
         try {
             $query = $this->dbh->prepare('INSERT INTO ' . $table . ' (HostPostCode, UniPostCode, TravelTime) VALUES (?,?,?)');
             $query->execute([$host, $uni, $time]);
@@ -53,7 +73,9 @@ Class Database {
             die();
         }
     }
-    public function selectAll($table, $selection) {
+
+    public function selectAll($table, $selection)
+    {
         try {
             $query = $this->dbh->prepare('SELECT ' . $selection . ' from ' . $table);
             $query->execute();
@@ -64,9 +86,11 @@ Class Database {
             die();
         }
     }
-    public function selectWhere($table, $selection, $colWhere, $where, $order, $colOrder) {
+
+    public function selectWhere($table, $selection, $colWhere, $where, $order, $colOrder)
+    {
         try {
-            $query = $this->dbh->prepare('SELECT ' . $selection . ' from ' . $table. ' WHERE ' . $colWhere . " = '" . $where . "' ORDER BY '" . $colOrder . ' ' . $order . "' LIMIT 10");
+            $query = $this->dbh->prepare('SELECT ' . $selection . ' from ' . $table. ' WHERE ' . $colWhere . " = '" . $where . "' ORDER BY " . $colOrder . ' ' . $order . " LIMIT 10");
             $query->execute();
             $result = $query->fetchAll();
             return $result;
@@ -75,7 +99,9 @@ Class Database {
             die();
         }
     }
-    public function selectWhereOr($table, $selection, $value) {
+
+    public function selectWhereOr($table, $selection, $value)
+    {
         try {
             $query = $this->dbh->prepare('SELECT ' . $selection . ' from ' . $table . " WHERE EstablishmentName = '" . $value . "' OR Postcode = '" . $value . "' OR Street = '" . $value . "'");
             $query->execute();
