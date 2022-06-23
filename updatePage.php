@@ -1,3 +1,15 @@
+<?php
+
+session_start();
+
+$error = null;
+
+if (isset($_SESSION['error'])) {
+    $error = $_SESSION['error'];
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,26 +32,30 @@
     </p>
 
     <p>
-        <form action="scripts/updateBase.php">
-            <input type="text" name="enteredPostCode" id="enteredPostCode">
-            <input type="submit" value="Update">
-            <p>
-                <label for="hostRadio">Host
-                    <input type="radio" name="placeType" id="hostRadio" value="hostRadio" required>
-                </label>
-            </p>
-            <p>
-                <label for="uniRadio">University
-                    <input type="radio" name="placeType" id="uniRadio" value="uniRadio">
-                </label>
-            </p>
-        </form>
+    <form action="scripts/updateBase.php">
+        <input type="text" name="enteredPostCode" id="enteredPostCode">
+        <input type="submit" value="Update">
+        <p>
+            <label for="hostRadio">Host
+                <input type="radio" name="placeType" id="hostRadio" value="hostRadio" required>
+            </label>
+        </p>
+        <p>
+            <label for="uniRadio">University
+                <input type="radio" name="placeType" id="uniRadio" value="uniRadio">
+            </label>
+        </p>
+    </form>
     </p>
 
     <p>
         <a href="search.php">
             <button class="Button">Back To Search</button>
         </a>
+    </p>
+
+    <p>
+        
     </p>
 
 </body>
