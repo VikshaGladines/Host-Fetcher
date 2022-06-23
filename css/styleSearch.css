@@ -3,10 +3,9 @@ h1 {
 }
 .inputSearch {
     margin-top: 25px;
-    text-align: center;
     color:darkcyan;
     margin-bottom: 40px;
-    border-bottom: solid 2px #32a1ce;
+    display: inline-block;
 }
 .labelInput {
     margin: 20px;
@@ -35,7 +34,7 @@ h1 {
   -webkit-user-select: none;
   touch-action: manipulation;
   margin-left: 10px;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
 }
 
 .Button:hover {
@@ -61,8 +60,6 @@ h1 {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-    margin-left: 10px;
-    justify-content: right;
   }
   
   .ButtonUpdate:hover {
@@ -74,4 +71,14 @@ h1 {
       padding: 1rem 2rem;
     }
   }
+
+.Error {
+  color: red;
+  font-size: 20px;
+  text-align: center;
+}
+.Header {
+  border-bottom: solid 2px #32a1ce;
+  text-align: center;
+}
   
