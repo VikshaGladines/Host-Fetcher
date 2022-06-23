@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styleSearch.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <title>Search Home</title>
 </head>
 <body>
@@ -25,28 +27,75 @@
     ?>
 
     <script>
-        let universities = <?php echo json_encode($uniJson); ?>;
-        document.write(arr[1]);
+        //let universities = <?php //echo json_encode($uniJson); ?>;
+        //document.write(arr[1]);
 
-    </script>
-    
+        $( function() {
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $( "#university" ).autocomplete({
+      source: availableTags
+    });
+} );
+
+</script>
+<div class="Header">
     <div class="inputSearch">
-    <label class="labelInput" for="search"> Enter the name of your school </label> 
+        <label class="labelInput" for="search"> Enter the name of your school </label> 
 
-    <form action="" name="search" method="POST">
-        <input class="Input" type="text" name="university" required placeholder="ex : Abbey Manor College">
-        <button class="Button" type="submit"> Search </button>   
-    </form>
+        <form action="" name="search" method="POST">
+            <input class="Input" type="text" id="university" name="university" required placeholder="ex : Abbey Manor College">
+            <button class="Button" type="submit"> Search </button>   
+        </form>
+        <form action="updatePage.php" method="POST">
+            <button class="ButtonUpdate" type="submit"> update </button>  
+        </form>
     </div>
-    <?php 
+</div>
 
+    <?php 
+    
     if (isset($_POST['university'])) {
         $value = $_POST['university'];
         $universityPostCode = $connect->selectWhereOr($uniTable, 'Postcode', $value);
+        if ($universityPostCode == false) {
+            echo '<p class="Error">Invalid university Name, PostCode or Street </p>';
+            die();
+        }
         if (isset($universityPostCode)) {
                 $travel = $connect->selectWhere($savedTable, '*', 'UniPostCode', $universityPostCode['Postcode'], "ASC", "TravelTime" );
+                if(empty($travel) == true) {
+                    echo '<p class="Error">Invalid university Name, PostCode or Street </p>';
+                    die();
+                }
                 foreach ($travel as $hostTravel) {
                     $hosts = $connect->selectWhere($hostTable, "*", 'Postcode', $hostTravel['HostPostCode'], "ASC", "Postcode");
+                    if(empty($hosts) == true) {
+                        echo '<p class="Error">Invalid university Name, PostCode or Street </p>';
+                        die();
+                    }
                     foreach($hosts as $host) {
                         echo $host['Postcode'].'  |  ';
                         echo $host['Number_of_bedrooms_available_to_students'].'  |  ';
@@ -60,10 +109,6 @@
         }
     } 
     ?>
-
-    <form action="updatePage.php" method="POST">
-        <button class="ButtonUpdate" type="submit"> update </button>  
-    </form>
 
     
     
