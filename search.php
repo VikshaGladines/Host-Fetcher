@@ -27,37 +27,19 @@
     ?>
 
     <script>
-        //let universities = <?php //echo json_encode($uniJson); ?>;
-        //document.write(arr[1]);
-
+        let universities = <?php echo json_encode($uniJson); ?>;
+        const obj = JSON.parse(universities);
+        var test = obj[0];
+        var test2 = test.LA_name;
+        console.log(test2);
         $( function() {
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-    $( "#university" ).autocomplete({
-      source: availableTags
-    });
+    let autoCompleteValue = [];
+    // universities.array.forEach(element => {
+    //     autoCompleteValue.push()
+    // });
+    // $( "#university" ).autocomplete({
+    //   source: availableTags
+    // });
 } );
 
 </script>
