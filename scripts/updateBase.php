@@ -81,7 +81,7 @@ if ($isPostCodeGiven) {
         if (empty($results) == false) {
             $connect->delete($savedTable, $delPostCodeName, $enteredPostCode);
         } else {
-            $_SESSION['error'] = 'Please enter a correct post code or choose the correct place type.';
+            $_SESSION['error'] = 'Please enter a correct post code that is in the database or choose the correct place type.';
             header("Location: ../updatePage.php");
             exit;
         }
