@@ -30,16 +30,12 @@ if (isset($_SESSION['done'])) {
 
     <h1>Update Page</h1>
 
-    <p>
-        <a href="scripts/updateBase.php">
-            <button class="ButtonUpdate">Update All</button>
-        </a>
-    </p>
 
     <p>
     <form action="scripts/updateBase.php">
-        <input type="text" name="enteredPostCode" id="enteredPostCode">
-        <input type="submit" value="Update">
+        <p>
+            <input type="text" name="enteredPostCode" id="enteredPostCode">
+        </p>
         <p>
             <label for="hostRadio">Host
                 <input type="radio" name="placeType" id="hostRadio" value="hostRadio" required>
@@ -50,7 +46,17 @@ if (isset($_SESSION['done'])) {
                 <input type="radio" name="placeType" id="uniRadio" value="uniRadio">
             </label>
         </p>
+        <p>
+            <input type="submit" name='updateButton' value="Update">
+            <input type="submit" name='deleteButton' value="Delete">
+        </p>
     </form>
+    </p>
+
+    <p>
+        <a href="scripts/updateBase.php">
+            <button class="ButtonUpdate">Update All</button>
+        </a>
     </p>
 
     <p>
@@ -62,16 +68,17 @@ if (isset($_SESSION['done'])) {
     <?php
 
     if ($error != null) {
-        echo '<p class="Error">' . $error . '</p>';
+        echo "<script type='text/javascript'>alert('$error');</script>";;
         session_destroy();
     }
 
     if ($doneText != null) {
-        echo '<p class="Done">' . $doneText . '</p>';
+        echo "<script type='text/javascript'>alert('$doneText');</script>";;
         session_destroy();
     }
 
     ?>
+
 
 </body>
 
