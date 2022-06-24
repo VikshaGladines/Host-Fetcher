@@ -55,7 +55,6 @@ class Database
     public function delete($table, $whereCol, $condition)
     {
         try {
-
             $query = $this->dbh->prepare("DELETE FROM " . $table . " WHERE " . $whereCol . " = '" . $condition . "'");
             $query->execute();
         } catch (PDOException $e) {
