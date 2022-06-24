@@ -1,3 +1,19 @@
+<?php
+include('class/DatabaseClass.php');
+
+$username = 'root';
+$dbName = 'databasetflapi';
+$hostTable = 'host_database';
+$uniTable = 'university_database';
+$savedTable = 'saved_data';
+
+$connect = new Database($username, '', $dbName);
+
+$universities = $connect->selectAll($uniTable, '*');
+
+$uniJson = json_encode($universities);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,64 +27,26 @@
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <title>Search Home</title>
     <style>
-       .ui-autocomplete {
+        .ui-autocomplete {
             max-height: 200px;
             overflow-y: auto;
             /* prevent horizontal scrollbar */
             overflow-x: hidden;
             /* add padding to account for vertical scrollbar */
             padding-right: 20px;
-        } 
-</style>
+        }
+    </style>
 </head>
 
 <body>
-    <?php
-    include('class/DatabaseClass.php');
 
-    $username = 'root';
-    $dbName = 'databasetflapi';
-    $hostTable = 'host_database';
-    $uniTable = 'university_database';
-    $savedTable = 'saved_data';
-
-    $connect = new Database($username, '', $dbName);
-
-    $universities = $connect->selectAll($uniTable, '*');
-
-    $uniJson = json_encode($universities);
-    ?>
-
-    <script>
-        let universities = <?php echo json_encode($uniJson); ?>;
-        const obj = JSON.parse(universities);
-        console.log(obj);
-        $(function() {
-            var autocompleteValue = [];
-
-            for (const key in obj) {
-                autocompleteValue.push(obj[key].EstablishmentName);
-                autocompleteValue.push(obj[key].Street);
-                if (obj[key].Postcode != null) {
-                    autocompleteValue.push(obj[key].Postcode);
-                }
-            }
-
-            var test = ['Viksha', 'Richard', 'Thomas'];
-            console.log(test);
-            console.log(autocompleteValue);
-            $("#university").autocomplete({
-                source: autocompleteValue
-            });
-        });
-    </script>
     <div class="Header">
         <div class="inputSearch">
             <label class="labelInput" for="search"> Enter the name of your school </label>
 
-            <div class="ui-widget" >
-                <form action="" name="search" method="POST" >
-                    <input style="overflow: scroll"  class="Input" type="text" id="university" name="university" required placeholder="ex : Abbey Manor College">
+            <div class="ui-widget">
+                <form action="" name="search" method="POST">
+                    <input style="overflow: scroll" class="Input" type="text" id="university" name="university" required placeholder="ex : Abbey Manor College">
                     <button class="Button" type="submit"> Search </button>
                 </form>
             </div>
@@ -107,9 +85,28 @@
         }
     }
     ?>
+    <script>
+        let universities = <?php echo json_encode($uniJson); ?>;
+        const obj = JSON.parse(universities);
+        console.log(obj);
+        $(function() {
+            var autocompleteValue = [];
 
+            for (const key in obj) {
+                autocompleteValue.push(obj[key].EstablishmentName);
+                autocompleteValue.push(obj[key].Street);
+                if (obj[key].Postcode != null) {
+                    autocompleteValue.push(obj[key].Postcode);
+                }
+            }
 
-
+            var test = ['Viksha', 'Richard', 'Thomas'];
+            console.log(test);
+            console.log(autocompleteValue);
+            $("#university").autocomplete({
+                source: autocompleteValue
+            });
+        });
+    </script>
 </body>
-
 </html>
