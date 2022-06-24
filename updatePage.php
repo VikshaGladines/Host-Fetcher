@@ -30,21 +30,20 @@ if (isset($_SESSION['done'])) {
 
     <h1>Update Page</h1>
 
-
     <p>
     <form action="scripts/updateBase.php">
         <p>
+            <label for="enteredPostCode">Enter a post code : </label>
             <input type="text" name="enteredPostCode" id="enteredPostCode">
         </p>
         <p>
-            <label for="hostRadio">Host
-                <input type="radio" name="placeType" id="hostRadio" value="hostRadio" required>
-            </label>
+            <label for="hostRadio">Host</label>
+            <input type="radio" name="placeType" id="hostRadio" value="hostRadio" required>
+
         </p>
         <p>
-            <label for="uniRadio">University
-                <input type="radio" name="placeType" id="uniRadio" value="uniRadio">
-            </label>
+            <label for="uniRadio">University</label>
+            <input type="radio" name="placeType" id="uniRadio" value="uniRadio">
         </p>
         <p>
             <input type="submit" name='updateButton' value="Update">
