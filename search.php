@@ -10,7 +10,7 @@ $uniTable = 'university_database';
 $savedTable = 'saved_data';
 
 // Connection to the database using our Database class and the previously set database information
-$connect = new Database($host,$username, '', $dbName);
+$connect = new Database($host, $username, '', $dbName);
 
 // Getting all the universities informations from the database
 $universities = $connect->selectAll($uniTable, '*');
@@ -51,21 +51,31 @@ $uniJson = json_encode($universities);
 
             <div class="ui-widget">
                 <!--form to search an university -->
-                <form action="" name="search" method="POST">
-                    <!--input for the search engine -->
-                    <input style="overflow: scroll" class="Input" type="text" id="university" name="university" required placeholder="Search">
-                    <button class="Button" type="submit"> Search </button>
-                </form>
+                <div class="test">
+                    <form action="" name="search" method="POST">
+                        <!--input for the search engine -->
+                        <input style="overflow: scroll" class="Input" type="text" id="university" name="university" required placeholder="Search">
+                        <button class="Button" type="submit"> Search </button>
+
+                    </form>
+                </div>
+
+                <div class="AlignCenter">
+                    <a href="updatePage.php">
+                        <button class="ButtonUpdate">Update</button>
+                    </a>
+                </div>
             </div>
-            <form action="updatePage.php" method="POST">
-                <button class="ButtonUpdate" type="submit"> update </button>
-            </form>
+
         </div>
+
     </div>
 
+    <div class="table">
     <?php
     // Verify if there is a value in the input named university
     if (isset($_POST['university'])) {
+
         // Take the value from the input named university
         $value = $_POST['university'];
         // Select all the universities Postcode where the value from the input university is equal to the universities from the database
@@ -86,24 +96,44 @@ $uniJson = json_encode($universities);
                 echo '<p class="Error">This journey has not yet been saved in the database</p>';
                 die();
             }
-
+            $count = 1;
+            echo '<h3 class="RoomInfo"> Room Information </h3> <br>';
+            echo '<table cellspacing="0" class="tableInfo">';
+            echo '<thead>
+                <tr>
+                    <th scope="col">Top</th>
+                    <th scope="col">Post code</th>
+                    <th scope="col">Nº of beds</th>
+                    <th scope="col">Meals Plan</th>
+                    <th scope="col">Beds</th>
+                    <th scope="col">Commute time (min) </th>
+                </tr>
+            </thead>';
+            echo '<tbody>';
             // For each travels that we find in savedTable
             foreach ($travel as $hostTravel) {
                 // Select all the information of an host where the Postcode from savedTable match the host Postcode and select the best 10
                 $hosts = $connect->selectWhere($hostTable, "*", 'Postcode', $hostTravel['HostPostCode'], "ASC", "Postcode");
                 // For each 10 host, show their information
                 foreach ($hosts as $host) {
-                    echo $host['Postcode'] . '  |  ';
-                    echo $host['Number_of_bedrooms_available_to_students'] . '  |  ';
-                    echo $host['Meal_Plan'] . '  |  ';
-                    echo $host['Select_the_beds_in_room_1'] . '  |  ';
-                    echo $hostTravel['TravelTime'] . '  |  ';
-                    echo '<br> <br> <br>';
+                    echo '<tr>';
+                    echo '<td>' . $count. '</td>';
+                    echo '<td>' . $host['Postcode'] . '</td>';
+                    echo '<td>' . $host['Number_of_bedrooms_available_to_students'] . '</td>';
+                    echo '<td>' . $host['Meal_Plan'] . '</td>';
+                    echo '<td>' . $host['Select_the_beds_in_room_1'] . '</td>';
+                    echo '<td>' . $hostTravel['TravelTime'] . '</td>';
+                    echo '</tr>';  
+                    $count++;
                 }
-            }
+            } 
+            echo '</tbody>';
+            echo '</table>';
         }
     }
     ?>
+    </div>
+
     <script>
         // Saved in the variable universities the Json from the universities of the database
         let universities = <?php echo json_encode($uniJson); ?>;
@@ -129,4 +159,5 @@ $uniJson = json_encode($universities);
         });
     </script>
 </body>
+
 </html>
