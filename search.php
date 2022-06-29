@@ -1,16 +1,20 @@
 <?php
 include('class/DatabaseClass.php');
 
+//variable for database
 $username = 'root';
 $dbName = 'databasetflapi';
 $hostTable = 'host_database';
 $uniTable = 'university_database';
 $savedTable = 'saved_data';
 
+//connection to the database with username, password and the name of the database
 $connect = new Database($username, '', $dbName);
 
+//select all the information that you from a table
 $universities = $connect->selectAll($uniTable, '*');
 
+//encode all the universities into Json and saved it in the variable
 $uniJson = json_encode($universities);
 ?>
 
@@ -45,7 +49,9 @@ $uniJson = json_encode($universities);
             <label class="labelInput" for="search"> Enter the name of your school </label>
 
             <div class="ui-widget">
+                <!--form to search an university -->
                 <form action="" name="search" method="POST">
+                    <!--input for the search engine -->
                     <input style="overflow: scroll" class="Input" type="text" id="university" name="university" required placeholder="ex : Abbey Manor College">
                     <button class="Button" type="submit"> Search </button>
                 </form>
@@ -57,22 +63,34 @@ $uniJson = json_encode($universities);
     </div>
 
     <?php
-
+    //verify if there is a value in the input named university
     if (isset($_POST['university'])) {
+        //take the value from the input named university
         $value = $_POST['university'];
+        //select all the universities Postcode where the value from the input university is equal to the universities from the database
         $universityPostCode = $connect->selectWhereOr($uniTable, 'Postcode', $value);
+
+        //if there is an error show an error message
         if ($universityPostCode == false) {
             echo '<p class="Error">Invalid university Name, PostCode or Street </p>';
             die();
         }
+        //if there's a value in universityPostCode we can continue
         if (isset($universityPostCode)) {
+            //select all the travels where the value of Postcode from universityPostCode is equal to a travel saved in savedTable
             $travel = $connect->selectWhere($savedTable, '*', 'UniPostCode', $universityPostCode['Postcode'], "ASC", "TravelTime");
+
+            //if the value is empty show an error message
             if (empty($travel) == true) {
                 echo '<p class="Error">This journey has not yet been saved in the database</p>';
                 die();
             }
+
+            //for each travels that we find in savedTable
             foreach ($travel as $hostTravel) {
+                //select all the information of an host where the Postcode from savedTable match the host Postcode and select the best 10
                 $hosts = $connect->selectWhere($hostTable, "*", 'Postcode', $hostTravel['HostPostCode'], "ASC", "Postcode");
+                //for each 10 host, show their information
                 foreach ($hosts as $host) {
                     echo $host['Postcode'] . '  |  ';
                     echo $host['Number_of_bedrooms_available_to_students'] . '  |  ';
@@ -86,12 +104,16 @@ $uniJson = json_encode($universities);
     }
     ?>
     <script>
+        //saved in the variable universities the Json from the universities of the database
         let universities = <?php echo json_encode($uniJson); ?>;
+        //parse in obj the Json so it will be readable
         const obj = JSON.parse(universities);
-        console.log(obj);
+        //function search engine with Jquery
         $(function() {
+            //create a table to saved the value for the search engine
             var autocompleteValue = [];
 
+            //for each object in the Json saved the value in the table autocompleteValue
             for (const key in obj) {
                 autocompleteValue.push(obj[key].EstablishmentName);
                 autocompleteValue.push(obj[key].Street);
@@ -99,10 +121,7 @@ $uniJson = json_encode($universities);
                     autocompleteValue.push(obj[key].Postcode);
                 }
             }
-
-            var test = ['Viksha', 'Richard', 'Thomas'];
-            console.log(test);
-            console.log(autocompleteValue);
+            //make the search engine use the table autocompleteTable for the search and use it in the input with the id university
             $("#university").autocomplete({
                 source: autocompleteValue
             });
