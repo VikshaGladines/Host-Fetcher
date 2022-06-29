@@ -1,20 +1,20 @@
 <?php
 include('class/DatabaseClass.php');
 
-//variable for database
+// Database information
 $username = 'root';
 $dbName = 'databasetflapi';
 $hostTable = 'host_database';
 $uniTable = 'university_database';
 $savedTable = 'saved_data';
 
-//connection to the database with username, password and the name of the database
+// Connection to the database using our Database class and the previously set database information
 $connect = new Database($username, '', $dbName);
 
-//select all the information that you from a table
+// Getting all the universities informations from the database
 $universities = $connect->selectAll($uniTable, '*');
 
-//encode all the universities into Json and saved it in the variable
+// Encode all the universities information into Json
 $uniJson = json_encode($universities);
 ?>
 

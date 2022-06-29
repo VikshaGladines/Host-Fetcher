@@ -17,10 +17,10 @@ $hostTable = 'host_database';
 $uniTable = 'university_database';
 $savedTable = 'saved_data';
 
-// Instantiation of a client object using the tfl api base url
+// Creating a client object (from the guzzle api) using the tfl api base url
 $client = new Client(['base_uri' => 'https://api.tfl.gov.uk/']);
 
-// Connection to the database using our Database class
+// Connection to the database using our Database class and the previously set database information
 $connect = new Database($username, '', $dbName);
 
 // Checking if the user entered a post code and checked a radio button
