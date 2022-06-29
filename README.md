@@ -19,7 +19,7 @@ Their API is used to know the commute time between two places.
 ## How to use it
 
 You can write any university information (postcode, address or name) in the search bar, 
-the app then show the 10 closest family hosts with their informations (postcode, number of beds, meal plans, beds number and the commute time (in minutes)) sorted from nearest to farthest.
+the app then display the 10 closest family hosts with their informations (postcode, number of beds, meal plans, beds number and the commute time (in minutes)) sorted from nearest to farthest.
 
 You can also manage the database using the update page.
 You can choose to update or delete a given travel information in the database or update all of it.
