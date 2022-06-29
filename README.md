@@ -1,7 +1,7 @@
 # Host Fetcher
 ***
 
-Host Fetcher is an app use internally by HostFamillyStay to help them to find the nearest family hosts from a given university
+Host Fetcher is an app used internally by HostFamillyStay company to help them to find the nearest family hosts from a given university
 This app has two parts, one fetch the top 10 nearest hosts from a given univeristy, the other is an admin part to update / add / delete hosts and universities travels in a saved database
 
 ***
