@@ -27,7 +27,7 @@ class Database
     }
 
     /**
-     * documented function
+     * Select all Postcode from the table
      *
      * @param string $table
      * @return array $result with all the Postcode from tables
@@ -48,12 +48,11 @@ class Database
     }
 
     /**
-     * documented function
+     * Function to empty a table
      *
      * @param string $table
      * @return void
      * 
-     * Function to empty a table
      */
     public function truncate($table)
     {
@@ -68,14 +67,13 @@ class Database
         }
     }
     /**
-     * documented function
+     * Function to delete line from the table you want
      *
      * @param string $table
      * @param string $whereCol
      * @param string $condition
      * @return void
      * 
-     * function to delete line from the table you want
      */
     public function delete($table, $whereCol, $condition)
     {
@@ -89,7 +87,7 @@ class Database
         }
     }
     /**
-     * documented function
+     * Function to update the table
      *
      * @param string $table
      * @param string $uni
@@ -97,7 +95,6 @@ class Database
      * @param int $time
      * @return void
      * 
-     * function to update the table
      */
     public function update($table, $uni, $host, $time)
     {
@@ -111,13 +108,12 @@ class Database
         }
     }
     /**
-     * documented function
+     * Function to select all the information from a table
      *
      * @param string $table
      * @param string $selection
      * @return array $result
      * 
-     * Function to select all the information from a table 
      */
     public function selectAll($table, $selection)
     {
@@ -133,7 +129,7 @@ class Database
         }
     }
     /**
-     * documented function
+     * Function to select value in a table where the values match and order it  
      *
      * @param string $table
      * @param string $selection
@@ -143,7 +139,6 @@ class Database
      * @param string $colOrder
      * @return array $result
      * 
-     * Function to select value in a table where the values match and order it  
      */
     public function selectWhere($table, $selection, $colWhere, $where, $order, $colOrder)
     {
@@ -159,14 +154,13 @@ class Database
         }
     }
     /**
-     * documented function
+     * Function to select value from a table with multiply conditions WHERE 
      *
      * @param string $table
      * @param string $selection
      * @param string $value
      * @return string $result
      * 
-     * Function to select value from a table with multiply conditions WHERE 
      */
     public function selectWhereOr($table, $selection, $value)
     {
