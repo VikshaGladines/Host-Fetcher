@@ -5,9 +5,9 @@ class Database
     private $dbh;
 
     // Constructor to create a connection to the database
-    public function __construct($user, $password, $bdd)
+    public function __construct($host, $user, $password, $bdd)
     {
-        $this->dbh = new PDO('mysql:host=localhost;dbname=' . $bdd, $user, $password);
+        $this->dbh = new PDO('mysql:host=' . $host . ';dbname=' . $bdd, $user, $password);
     }
     public function getUser()
     {

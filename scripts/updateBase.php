@@ -11,6 +11,7 @@ session_start();
 ini_set('max_execution_time', 0);
 
 // Database information
+$host = 'localhost';
 $username = 'root';
 $dbName = 'databasetflapi';
 $hostTable = 'host_database';
@@ -21,7 +22,7 @@ $savedTable = 'saved_data';
 $client = new Client(['base_uri' => 'https://api.tfl.gov.uk/']);
 
 // Connection to the database using our Database class and the previously set database information
-$connect = new Database($username, '', $dbName);
+$connect = new Database($host, $username, '', $dbName);
 
 // Checking if the user entered a post code and checked a radio button
 $isPostCodeGiven = isset($_GET['enteredPostCode']);

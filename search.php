@@ -2,6 +2,7 @@
 include('class/DatabaseClass.php');
 
 // Database information
+$host = 'localhost';
 $username = 'root';
 $dbName = 'databasetflapi';
 $hostTable = 'host_database';
@@ -9,7 +10,7 @@ $uniTable = 'university_database';
 $savedTable = 'saved_data';
 
 // Connection to the database using our Database class and the previously set database information
-$connect = new Database($username, '', $dbName);
+$connect = new Database($host, $username, '', $dbName);
 
 // Getting all the universities informations from the database
 $universities = $connect->selectAll($uniTable, '*');
