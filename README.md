@@ -1,4 +1,4 @@
-#Host Fetcher
+# Host Fetcher
 ***
 
 Host Fetcher is an app use internally by HostFamillyStay to help them to find the nearest family hosts from a given university
