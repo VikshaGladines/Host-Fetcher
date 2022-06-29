@@ -63,34 +63,34 @@ $uniJson = json_encode($universities);
     </div>
 
     <?php
-    //verify if there is a value in the input named university
+    // Verify if there is a value in the input named university
     if (isset($_POST['university'])) {
-        //take the value from the input named university
+        // Take the value from the input named university
         $value = $_POST['university'];
-        //select all the universities Postcode where the value from the input university is equal to the universities from the database
+        // Select all the universities Postcode where the value from the input university is equal to the universities from the database
         $universityPostCode = $connect->selectWhereOr($uniTable, 'Postcode', $value);
 
-        //if there is an error show an error message
+        // If there is an error show an error message
         if ($universityPostCode == false) {
             echo '<p class="Error">Invalid university Name, PostCode or Street </p>';
             die();
         }
-        //if there's a value in universityPostCode we can continue
+        // If there's a value in universityPostCode we can continue
         if (isset($universityPostCode)) {
-            //select all the travels where the value of Postcode from universityPostCode is equal to a travel saved in savedTable
+            // Select all the travels where the value of Postcode from universityPostCode is equal to a travel saved in savedTable
             $travel = $connect->selectWhere($savedTable, '*', 'UniPostCode', $universityPostCode['Postcode'], "ASC", "TravelTime");
 
-            //if the value is empty show an error message
+            // If the value is empty show an error message
             if (empty($travel) == true) {
                 echo '<p class="Error">This journey has not yet been saved in the database</p>';
                 die();
             }
 
-            //for each travels that we find in savedTable
+            // For each travels that we find in savedTable
             foreach ($travel as $hostTravel) {
-                //select all the information of an host where the Postcode from savedTable match the host Postcode and select the best 10
+                // Select all the information of an host where the Postcode from savedTable match the host Postcode and select the best 10
                 $hosts = $connect->selectWhere($hostTable, "*", 'Postcode', $hostTravel['HostPostCode'], "ASC", "Postcode");
-                //for each 10 host, show their information
+                // For each 10 host, show their information
                 foreach ($hosts as $host) {
                     echo $host['Postcode'] . '  |  ';
                     echo $host['Number_of_bedrooms_available_to_students'] . '  |  ';
@@ -104,16 +104,16 @@ $uniJson = json_encode($universities);
     }
     ?>
     <script>
-        //saved in the variable universities the Json from the universities of the database
+        // Saved in the variable universities the Json from the universities of the database
         let universities = <?php echo json_encode($uniJson); ?>;
-        //parse in obj the Json so it will be readable
+        // Parse in obj the Json so it will be readable
         const obj = JSON.parse(universities);
-        //function search engine with Jquery
+        // Function search engine with Jquery
         $(function() {
-            //create a table to saved the value for the search engine
+            // Create a table to saved the value for the search engine
             var autocompleteValue = [];
 
-            //for each object in the Json saved the value in the table autocompleteValue
+            // For each object in the Json saved the value in the table autocompleteValue
             for (const key in obj) {
                 autocompleteValue.push(obj[key].EstablishmentName);
                 autocompleteValue.push(obj[key].Street);
@@ -121,7 +121,7 @@ $uniJson = json_encode($universities);
                     autocompleteValue.push(obj[key].Postcode);
                 }
             }
-            //make the search engine use the table autocompleteTable for the search and use it in the input with the id university
+            // Make the search engine use the table autocompleteTable for the search and use it in the input with the id university
             $("#university").autocomplete({
                 source: autocompleteValue
             });
