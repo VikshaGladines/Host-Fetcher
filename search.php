@@ -26,7 +26,7 @@ $uniJson = json_encode($universities);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styleSearch.css">
+    <link rel="stylesheet" href="css/searchStyle.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
@@ -53,7 +53,7 @@ $uniJson = json_encode($universities);
                 <!--form to search an university -->
                 <form action="" name="search" method="POST">
                     <!--input for the search engine -->
-                    <input style="overflow: scroll" class="Input" type="text" id="university" name="university" required placeholder="ex : Abbey Manor College">
+                    <input style="overflow: scroll" class="Input" type="text" id="university" name="university" required placeholder="Search">
                     <button class="Button" type="submit"> Search </button>
                 </form>
             </div>
