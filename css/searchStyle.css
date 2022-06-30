@@ -19,9 +19,7 @@ body {
     -moz-border-radius: 7px;
     border-radius: 7px;
     border: 1px solid #d9d9d9;
-    width: 1350px;
     height: 30px;
-
 }
 
 Input::placeholder {
@@ -41,7 +39,7 @@ Input::placeholder {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-    margin-left: 10px;
+    
     margin-bottom: 10px;
 
 }
@@ -64,7 +62,7 @@ Input::placeholder {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-    margin-right: 70px;
+    
 }
 
 @media (min-width: 768px) {
@@ -72,7 +70,7 @@ Input::placeholder {
         padding: 7px 35px;
     }
 }
-.AlignCenter{
+.Right{
   float: right;
 }
 .Error {
@@ -94,22 +92,54 @@ Input::placeholder {
     padding-left: 50px;
     background-color: #7bb6ea;
 }
-.test {
+.Left {
     float: left;
 }
 .table {
     margin-left: 100px;
+    margin-right: 100px;
 }
 .RoomInfo {
-    color: #dff0fa;
+    color: #f8fafd;
+    text-align: left;
 }
 .tableInfo {
     color: #f8fafd;
+    margin-bottom: 30px;
 }
 td{
     text-align: center;
     padding-bottom: 10px;
     padding-top: 10px;
+    padding-right: 10px;
     border-bottom: solid 2px #f8fafd;
     border-collapse: collapse;
 }
+th {
+    padding: 2em 1em;
+}
+.RightBorder {
+    border-right: #f8fafd solid 2px;
+}
+
+
+.inform {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+.inform form {
+    display: flex;
+    flex-flow: row wrap;
+    flex-grow: 1;
+    justify-content: space-evenly;
+    width: 70%;
+}
+.inform input {
+    flex-grow: 1;
+    margin-right: 3%;
+}
+.inform a {
+    margin: 0 5% 0 3%;
+}
+
