@@ -139,6 +139,7 @@ Input::placeholder {
 .tableInfo {
     color: #f8fafd;
     margin: auto 30px;
+    width: 95%;
 }
 
 td {
