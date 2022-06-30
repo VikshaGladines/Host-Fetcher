@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/searchStyle.css">
     <title>Loading...</title>
 </head>
 <body>
-    
+    <h1 class="Loading">Currently loading pls wait...</h1>
+    <br>
+    <h1 class="Loading">If you are updating all the database it can take multiple hours</h1>
 </body>
 </html>
 

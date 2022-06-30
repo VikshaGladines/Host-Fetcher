@@ -254,3 +254,8 @@ form {
     text-align: center;
     margin-top: 530px;
 }
+
+.Loading {
+    text-align: center;
+    color: white;
+}
