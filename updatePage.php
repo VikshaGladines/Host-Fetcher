@@ -35,7 +35,7 @@ if (isset($_SESSION['done'])) {
 
     <div class="inputSearch">
         <p>
-        <form action="scripts/updateBase.php" name="update">
+        <form action="scripts/updateBase.php" name="update" class="formUpdate">
             <p>
                 <label for="enteredPostCode" class="labelInputPostCode">Post Code</label>
                 <br>
