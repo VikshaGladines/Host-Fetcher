@@ -29,6 +29,7 @@ $uniJson = json_encode($universities);
     <link rel="stylesheet" href="css/searchStyle.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css" integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <title>Search Home</title>
     <style>

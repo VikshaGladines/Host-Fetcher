@@ -138,7 +138,7 @@ Input::placeholder {
 
 .tableInfo {
     color: #f8fafd;
-    margin-bottom: 30px;
+    margin: auto 30px;
 }
 
 td {
@@ -174,8 +174,13 @@ th {
 }
 
 .inform input {
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magnifying_glass_icon.svg/480px-Magnifying_glass_icon.svg.png);
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    background-size: 20px;
     flex-grow: 1;
     margin-right: 3%;
+    padding-left: 40px;
 }
 
 .inform a {
