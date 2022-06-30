@@ -51,16 +51,13 @@ $uniJson = json_encode($universities);
 
             <div class="ui-widget">
                 <!--form to search an university -->
-                <div class="test">
+                <div class="inform">
                     <form action="" name="search" method="POST">
                         <!--input for the search engine -->
                         <input style="overflow: scroll" class="Input" type="text" id="university" name="university" required placeholder="Search">
                         <button class="Button" type="submit"> Search </button>
 
                     </form>
-                </div>
-
-                <div class="AlignCenter">
                     <a href="updatePage.php">
                         <button class="ButtonUpdate">Update</button>
                     </a>
@@ -97,11 +94,11 @@ $uniJson = json_encode($universities);
                 die();
             }
             $count = 1;
-            echo '<h3 class="RoomInfo"> Room Information </h3> <br>';
+            echo '<h2 class="RoomInfo"> Room Information </h3> <br>';
             echo '<table cellspacing="0" class="tableInfo">';
             echo '<thead>
                 <tr>
-                    <th scope="col">Top</th>
+                    <th scope="col"></th>
                     <th scope="col">Post code</th>
                     <th scope="col">Nº of beds</th>
                     <th scope="col">Meals Plan</th>
@@ -116,15 +113,26 @@ $uniJson = json_encode($universities);
                 $hosts = $connect->selectWhere($hostTable, "*", 'Postcode', $hostTravel['HostPostCode'], "ASC", "Postcode");
                 // For each 10 host, show their information
                 foreach ($hosts as $host) {
+                    $meals = explode(";", $host['Meal_Plan']);
+                    $allinfo = "";
+                    foreach($meals as $meal) {
+                        if (strpos($meal, ")")) {
+                            $dinner = explode(")", explode("(", $meal)[1])[0];
+                            $allinfo = $allinfo." / ".substr($meal, 0, -(strlen($dinner) + 2));
+                        } else {
+                            $allinfo = $allinfo." / ".$meal;
+                        }
+                    }
                     echo '<tr>';
-                    echo '<td>' . $count. '</td>';
+                    echo '<td class="RightBorder">' . $count. '</td>';
                     echo '<td>' . $host['Postcode'] . '</td>';
                     echo '<td>' . $host['Number_of_bedrooms_available_to_students'] . '</td>';
-                    echo '<td>' . $host['Meal_Plan'] . '</td>';
+                    echo '<td>' . $allinfo . '</td>';
                     echo '<td>' . $host['Select_the_beds_in_room_1'] . '</td>';
                     echo '<td>' . $hostTravel['TravelTime'] . '</td>';
                     echo '</tr>';  
                     $count++;
+                    
                 }
             } 
             echo '</tbody>';
