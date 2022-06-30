@@ -158,7 +158,6 @@ th {
     border-right: #f8fafd solid 2px;
 }
 
-
 .inform {
     display: flex;
     flex-flow: row wrap;
@@ -256,11 +255,17 @@ th {
 }
 
 .navigationButton {
-    text-align: center;
-    margin-top: 530px;
+    position: absolute;
+    bottom: 0;
+    margin-left: 40%;
+    margin-bottom: 1%;
 }
 
 .Loading {
     text-align: center;
     color: white;
+}
+
+a {
+    text-decoration: inherit;
 }

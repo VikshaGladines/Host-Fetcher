@@ -33,24 +33,22 @@ if (isset($_SESSION['done'])) {
         <label class="labelInput" for="update">Update Page</label>
     </div>
 
-
     <div class="inputSearch">
-        <p>
         <form action="scripts/updateBase.php" name="update" class="formUpdate">
             <p>
                 <label for="enteredPostCode" class="labelInputPostCode">Post Code</label>
                 <br>
-                <input type="text" class="Input" name="enteredPostCode" id="enteredPostCode">
+                <input type="text" class="Input" name="enteredPostCode" id="enteredPostCode" placeholder="Exemple : 'SE22 8SU'">
             </p>
             <p>
                 <label for="hostRadio" class="labelInputPostCode container">Host
-                <input type="radio" name="placeType" id="hostRadio" value="hostRadio" required>
-                <span class="checkmark"></span>
+                    <input type="radio" name="placeType" id="hostRadio" value="hostRadio" required>
+                    <span class="checkmark"></span>
                 </label>
-    
+
                 <label for="uniRadio" class="labelInputPostCode container">University
-                <input type="radio" name="placeType" id="uniRadio" value="uniRadio">
-                <span class="checkmark"></span>
+                    <input type="radio" name="placeType" id="uniRadio" value="uniRadio">
+                    <span class="checkmark"></span>
                 </label>
             </p>
             <p>
@@ -58,17 +56,16 @@ if (isset($_SESSION['done'])) {
                 <input type="submit" name='deleteButton' value="Delete" class="ButtonUpdatePage">
             </p>
         </form>
-        </p>
     </div>
 
-    <p class="navigationButton">
+    <div class="navigationButton">
         <a href="scripts/updateBase.php">
             <button class="ButtonUpdatePage">Update All</button>
         </a>
         <a href="search.php">
             <button class="ButtonUpdatePage">Back To Search</button>
         </a>
-    </p>
+    </div>
 
     <?php
 
