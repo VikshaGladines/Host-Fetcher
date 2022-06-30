@@ -37,7 +37,7 @@ if (isset($_SESSION['done'])) {
             <p>
                 <label for="enteredPostCode" class="labelInputPostCode">Post Code</label>
                 <br>
-                <input type="text" class="Input" name="enteredPostCode" id="enteredPostCode" placeholder="Search">
+                <input type="text" class="Input" name="enteredPostCode" id="enteredPostCode" placeholder="Exemple : 'SE22 8SU'">
             </p>
             <p>
                 <label for="hostRadio" class="labelInputPostCode container">Host
