@@ -13,6 +13,12 @@ body {
     font-weight: bold;
 }
 
+.labelInputPostCode {
+    font-size: 30px;
+    color: white;
+    font-weight: bold;
+}
+
 .Input {
     background-color: #d9d9d9;
     -webkit-border-radius: 7px;
@@ -39,7 +45,7 @@ Input::placeholder {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-    
+
     margin-bottom: 10px;
 
 }
@@ -62,7 +68,7 @@ Input::placeholder {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-    
+
 }
 
 @media (min-width: 768px) {
@@ -70,9 +76,32 @@ Input::placeholder {
         padding: 7px 35px;
     }
 }
-.Right{
-  float: right;
+
+.ButtonUpdatePage {
+    background-color: #7bb6ea;
+    border-radius: .5rem;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    font-size: 16px;
+    text-decoration: none;
+    border: 0;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+
 }
+
+@media (min-width: 768px) {
+    .ButtonUpdatePage {
+        padding: 7px 35px;
+    }
+}
+
+.Right {
+    float: right;
+}
+
 .Error {
     color: red;
     font-size: 20px;
@@ -92,22 +121,27 @@ Input::placeholder {
     padding-left: 50px;
     background-color: #7bb6ea;
 }
+
 .Left {
     float: left;
 }
+
 .table {
     margin-left: 100px;
     margin-right: 100px;
 }
+
 .RoomInfo {
     color: #f8fafd;
     text-align: left;
 }
+
 .tableInfo {
     color: #f8fafd;
     margin-bottom: 30px;
 }
-td{
+
+td {
     text-align: center;
     padding-bottom: 10px;
     padding-top: 10px;
@@ -115,9 +149,11 @@ td{
     border-bottom: solid 2px #f8fafd;
     border-collapse: collapse;
 }
+
 th {
     padding: 2em 1em;
 }
+
 .RightBorder {
     border-right: #f8fafd solid 2px;
 }
@@ -128,6 +164,7 @@ th {
     flex-flow: row wrap;
     justify-content: space-evenly;
 }
+
 .inform form {
     display: flex;
     flex-flow: row wrap;
@@ -135,11 +172,85 @@ th {
     justify-content: space-evenly;
     width: 70%;
 }
+
 .inform input {
     flex-grow: 1;
     margin-right: 3%;
 }
+
 .inform a {
     margin: 0 5% 0 3%;
 }
 
+form {
+    margin-left: 50px;
+}
+
+/* The container */
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input~.checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked~.checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+.navigationButton {
+    text-align: center;
+    margin-top: 530px;
+}

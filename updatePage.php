@@ -22,45 +22,50 @@ if (isset($_SESSION['done'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styleSearch.css">
+    <link rel="stylesheet" href="css/searchStyle.css">
     <title>Update Page</title>
 </head>
 
 <body>
 
-    <h1>Update Page</h1>
+    <div class="Header">
+        <label class="labelInput" for="update">Update Page</label>
+    </div>
 
-    <p>
-    <form action="scripts/updateBase.php">
-        <p>
-            <label for="enteredPostCode">Enter a post code : </label>
-            <input type="text" name="enteredPostCode" id="enteredPostCode">
-        </p>
-        <p>
-            <label for="hostRadio">Host</label>
-            <input type="radio" name="placeType" id="hostRadio" value="hostRadio" required>
 
-        </p>
+    <div class="inputSearch">
         <p>
-            <label for="uniRadio">University</label>
-            <input type="radio" name="placeType" id="uniRadio" value="uniRadio">
+        <form action="scripts/updateBase.php" name="update">
+            <p>
+                <label for="enteredPostCode" class="labelInputPostCode">Post Code</label>
+                <br>
+                <input type="text" class="Input" name="enteredPostCode" id="enteredPostCode">
+            </p>
+            <p>
+                <label for="hostRadio" class="labelInputPostCode container">Host
+                <input type="radio" name="placeType" id="hostRadio" value="hostRadio" required>
+                <span class="checkmark"></span>
+                </label>
+    
+                <label for="uniRadio" class="labelInputPostCode container">University
+                <input type="radio" name="placeType" id="uniRadio" value="uniRadio">
+                <span class="checkmark"></span>
+                </label>
+            </p>
+            <p>
+                <input type="submit" name='updateButton' value="Update" class="ButtonUpdatePage">
+                <input type="submit" name='deleteButton' value="Delete" class="ButtonUpdatePage">
+            </p>
+        </form>
         </p>
-        <p>
-            <input type="submit" name='updateButton' value="Update">
-            <input type="submit" name='deleteButton' value="Delete">
-        </p>
-    </form>
-    </p>
+    </div>
 
-    <p>
+    <p class="navigationButton">
         <a href="scripts/updateBase.php">
-            <button class="ButtonUpdate">Update All</button>
+            <button class="ButtonUpdatePage">Update All</button>
         </a>
-    </p>
-
-    <p>
         <a href="search.php">
-            <button class="Button">Back To Search</button>
+            <button class="ButtonUpdatePage">Back To Search</button>
         </a>
     </p>
 
